@@ -32,6 +32,7 @@
     "eslint-plugin-react": "^3.16.1"
   },
   "dependencies": {
+    "keycode": "^2.1.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   }
