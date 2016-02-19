@@ -22,7 +22,7 @@ var App = React.createClass({
   }
 
 , componentDidMount: function componentDidMount () {
-    document.addEventListener('keyup', this.onKeyup)
+    document.addEventListener('keyup', this.handleKeyup)
   }
 
 , getNewWord: function getNewWord () {
@@ -39,26 +39,27 @@ var App = React.createClass({
     })
   }
 
-, checkWord: function checkWord (letters) {
-    var shuffledLetters = this.state.shuffledLetters
-    var result = letters.join('') === this.state.currentWord
+, resetRound: function resetRound (shuffledLetters) {
+    this.setState({
+      matchedLetters: []
+    , unmatchedLetters: shuffledLetters
+    })
+  }
 
-    if (letters.length === shuffledLetters.length) {
-      if (result) {
+, checkWord: function checkWord (letters) {
+    if (letters.length === this.state.shuffledLetters.length) {
+      if (letters.join('') === this.state.currentWord) {
         console.log('you win')
         this.getNewWord()
       }
       else {
         console.log('you lose. try again')
-        this.setState({
-          matchedLetters: []
-        , unmatchedLetters: shuffledLetters
-        })
+        this.resetRound(this.state.shuffledLetters)
       }
     }
   }
 
-, onKeyup: function onKeyup (event) {
+, handleKeyup: function handleKeyup (event) {
     var typed = keycode(event)
     var matchedLetters = this.state.matchedLetters
     var unmatchedLetters = this.state.unmatchedLetters
