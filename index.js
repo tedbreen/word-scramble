@@ -2,8 +2,7 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var keycode = require('keycode')
 var shuffleArray = require('shuffle-array')
-// TEMPORARY
-var randomWords = require('random-words')
+var reqwest = require('reqwest')
 // components
 var Word = require('./components/word/')
 // constants
@@ -11,35 +10,40 @@ var ROUND_DELAY = 1500
 
 var App = React.createClass({
   getInitialState: function getInitialState () {
-    var currentWord = randomWords().toLowerCase()
-    var shuffledLetters = shuffleArray(currentWord.split(''))
-    // DEBUG ONLY
-    console.log(currentWord)
     return {
-      shuffledLetters: shuffledLetters
+      shuffledLetters: []
     , matchedLetters: []
-    , unmatchedLetters: shuffledLetters
-    , currentWord: currentWord
+    , unmatchedLetters: []
+    , currentWord: ''
     , roundStatus: null
     }
   }
 
 , componentDidMount: function componentDidMount () {
+    this.getNewWord()
     window.addEventListener('keyup', this.handleKeyup)
   }
 
 , getNewWord: function getNewWord () {
-    // TODO: replace with ajax request
-    var currentWord = randomWords().toLowerCase()
-    var shuffledLetters = shuffleArray(currentWord.split(''))
-    // DEBUG ONLY
-    console.log(currentWord)
-    this.setState({
-      shuffledLetters: shuffledLetters
-    , matchedLetters: []
-    , unmatchedLetters: shuffledLetters
-    , currentWord: currentWord
-    , roundStatus: null
+    reqwest({
+      url: '/word'
+    , method: 'get'
+    , success: function success (word) {
+        var shuffledLetters = shuffleArray(word.split(''))
+
+        console.log('HINT: ', word)
+
+        this.setState({
+          shuffledLetters: shuffledLetters
+        , matchedLetters: []
+        , unmatchedLetters: shuffledLetters
+        , currentWord: word
+        , roundStatus: null
+        })
+      }.bind(this)
+    , error: function error (err) {
+        console.error('/word get request error:', err)
+      }
     })
   }
 
