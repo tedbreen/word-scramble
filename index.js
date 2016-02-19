@@ -6,6 +6,8 @@ var shuffleArray = require('shuffle-array')
 var randomWords = require('random-words')
 // components
 var Word = require('./components/word/')
+// constants
+var ROUND_DELAY = 1500
 
 var App = React.createClass({
   getInitialState: function getInitialState () {
@@ -22,7 +24,7 @@ var App = React.createClass({
   }
 
 , componentDidMount: function componentDidMount () {
-    document.addEventListener('keyup', this.handleKeyup)
+    window.addEventListener('keyup', this.handleKeyup)
   }
 
 , getNewWord: function getNewWord () {
@@ -39,7 +41,9 @@ var App = React.createClass({
     })
   }
 
-, resetRound: function resetRound (shuffledLetters) {
+, resetRound: function resetRound () {
+    var shuffledLetters = this.state.shuffledLetters
+
     this.setState({
       matchedLetters: []
     , unmatchedLetters: shuffledLetters
@@ -50,11 +54,11 @@ var App = React.createClass({
     if (letters.length === this.state.shuffledLetters.length) {
       if (letters.join('') === this.state.currentWord) {
         console.log('you win')
-        this.getNewWord()
+        window.setTimeout(this.getNewWord, ROUND_DELAY)
       }
       else {
         console.log('you lose. try again')
-        this.resetRound(this.state.shuffledLetters)
+        window.setTimeout(this.resetRound, ROUND_DELAY)
       }
     }
   }
