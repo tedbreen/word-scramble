@@ -11,7 +11,8 @@ var App = React.createClass({
 
 , getInitialState: function getInitialState () {
     return {
-      matches: []
+      matchedLetters: []
+    , unmatchedLetters: this.props.word.split('')
     }
   }
 
@@ -20,25 +21,37 @@ var App = React.createClass({
   }
 
 , onKeyup: function onKeyup (event) {
-    var letters = this.props.word.split('')
-    var matches = this.state.matches
     var typed = keycode(event)
+    var matchedLetters = this.state.matchedLetters
+    var unmatchedLetters = this.state.unmatchedLetters
+    var newUnmatchedLetters = []
+    var unmatched = true
 
-    if (letters.includes(typed) && !matches.includes(typed)) {
-      matches.push(typed)
-      this.setState({matches: matches})
-    }
+    unmatchedLetters.forEach(function forEach (letter) {
+      if (unmatched && (letter === typed)) {
+        unmatched = false
+        matchedLetters.push(letter)
+      }
+      else {
+        newUnmatchedLetters.push(letter)
+      }
+    })
+
+    this.setState({
+      matchedLetters: matchedLetters
+    , unmatchedLetters: newUnmatchedLetters
+    })
   }
 
 , render: function render () {
-    var letters = this.props.word.split('')
-    var matches = this.state.matches
+    var matchedLetters = this.state.matchedLetters
+    var unmatchedLetters = this.state.unmatchedLetters
 
     return (
       <div>
         <Word
-          letters={letters}
-          matches={matches}
+          matchedLetters={matchedLetters}
+          unmatchedLetters={unmatchedLetters}
         />
       </div>
     )
@@ -46,7 +59,7 @@ var App = React.createClass({
 })
 
 var markup = (
-  <App word="ted" />
+  <App word="breen" />
 )
 
 ReactDOM.render(markup, document.getElementById('react'))
