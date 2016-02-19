@@ -5,30 +5,34 @@ var keycode = require('keycode')
 var Word = require('./components/word/')
 
 var App = React.createClass({
-  getInitialState: function getInitialState () {
+  propTypes: {
+    word: React.PropTypes.string
+  }
+
+, getInitialState: function getInitialState () {
     return {
-      typed: ''
-    , matches: []
+      matches: []
     }
   }
 
 , componentDidMount: function componentDidMount () {
-    document.addEventListener('keyup', function listener (event) {
-      var typed = keycode(event)
-      this.setState({typed: typed})
-    }.bind(this))
+    document.addEventListener('keyup', this.onKeyup)
   }
 
-, render: function render () {
-    var word = 'ted'
-    var letters = word.split('')
-    var typed = this.state.typed
+, onKeyup: function onKeyup (event) {
+    var letters = this.props.word.split('')
     var matches = this.state.matches
+    var typed = keycode(event)
 
     if (letters.includes(typed) && !matches.includes(typed)) {
       matches.push(typed)
       this.setState({matches: matches})
     }
+  }
+
+, render: function render () {
+    var letters = this.props.word.split('')
+    var matches = this.state.matches
 
     return (
       <div>
@@ -42,7 +46,7 @@ var App = React.createClass({
 })
 
 var markup = (
-  <App />
+  <App word="ted" />
 )
 
 ReactDOM.render(markup, document.getElementById('react'))

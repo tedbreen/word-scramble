@@ -22,6 +22,7 @@ module.exports = React.createClass({
         />
       )
     }, this)
+
     return (
       <div className="word">{letters}</div>
     )
