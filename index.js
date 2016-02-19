@@ -2,21 +2,22 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var keycode = require('keycode')
 var shuffleArray = require('shuffle-array')
+// TEMPORARY
+var randomWords = require('random-words')
 // components
 var Word = require('./components/word/')
 
 var App = React.createClass({
-  propTypes: {
-    word: React.PropTypes.string
-  }
-
-, getInitialState: function getInitialState () {
-    var shuffledLetters = shuffleArray(this.props.word.split(''))
-
+  getInitialState: function getInitialState () {
+    var currentWord = randomWords().toLowerCase()
+    var shuffledLetters = shuffleArray(currentWord.split(''))
+    // DEBUG ONLY
+    console.log(currentWord)
     return {
       shuffledLetters: shuffledLetters
     , matchedLetters: []
     , unmatchedLetters: shuffledLetters
+    , currentWord: currentWord
     }
   }
 
@@ -25,12 +26,22 @@ var App = React.createClass({
   }
 
 , getNewWord: function getNewWord () {
-    // ajax request
+    // TODO: replace with ajax request
+    var currentWord = randomWords().toLowerCase()
+    var shuffledLetters = shuffleArray(currentWord.split(''))
+    // DEBUG ONLY
+    console.log(currentWord)
+    this.setState({
+      shuffledLetters: shuffledLetters
+    , matchedLetters: []
+    , unmatchedLetters: shuffledLetters
+    , currentWord: currentWord
+    })
   }
 
 , checkWord: function checkWord (letters) {
     var shuffledLetters = this.state.shuffledLetters
-    var result = letters.join('') === this.props.word
+    var result = letters.join('') === this.state.currentWord
 
     if (letters.length === shuffledLetters.length) {
       if (result) {
@@ -88,7 +99,7 @@ var App = React.createClass({
 })
 
 var markup = (
-  <App word="breen" />
+  <App />
 )
 
 ReactDOM.render(markup, document.getElementById('react'))
