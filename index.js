@@ -20,6 +20,7 @@ var App = React.createClass({
     , matchedLetters: []
     , unmatchedLetters: shuffledLetters
     , currentWord: currentWord
+    , roundStatus: null
     }
   }
 
@@ -38,6 +39,7 @@ var App = React.createClass({
     , matchedLetters: []
     , unmatchedLetters: shuffledLetters
     , currentWord: currentWord
+    , roundStatus: null
     })
   }
 
@@ -47,17 +49,18 @@ var App = React.createClass({
     this.setState({
       matchedLetters: []
     , unmatchedLetters: shuffledLetters
+    , roundStatus: null
     })
   }
 
 , checkWord: function checkWord (letters) {
     if (letters.length === this.state.shuffledLetters.length) {
       if (letters.join('') === this.state.currentWord) {
-        console.log('you win')
+        this.setState({roundStatus: 'won'})
         window.setTimeout(this.getNewWord, ROUND_DELAY)
       }
       else {
-        console.log('you lose. try again')
+        this.setState({roundStatus: 'lost'})
         window.setTimeout(this.resetRound, ROUND_DELAY)
       }
     }
@@ -91,12 +94,14 @@ var App = React.createClass({
 , render: function render () {
     var matchedLetters = this.state.matchedLetters
     var unmatchedLetters = this.state.unmatchedLetters
+    var roundStatus = this.state.roundStatus
 
     return (
       <div>
         <Word
           matchedLetters={matchedLetters}
           unmatchedLetters={unmatchedLetters}
+          progress={roundStatus}
         />
       </div>
     )
