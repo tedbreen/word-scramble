@@ -5,21 +5,37 @@ var Letter = require('../letter/')
 module.exports = React.createClass({
   propTypes: {
     matchedLetters: React.PropTypes.arrayOf(React.PropTypes.string)
+  , progress: React.PropTypes.oneOf(['won', 'lost'])
   , unmatchedLetters: React.PropTypes.arrayOf(React.PropTypes.string)
   }
 
 , render: function render () {
-    var matchedLetters = this.props.matchedLetters.map(function map (letter, idx) {
+    var matchedLetters = this.props.matchedLetters
+    var unmatchedLetters = this.props.unmatchedLetters
+
+    matchedLetters = matchedLetters.map(function map (letter, idx) {
+      var letterStatus
+
+      if (this.props.progress === 'won') {
+        letterStatus = 'correct'
+      }
+      else if (this.props.progress === 'lost') {
+        letterStatus = 'wrong'
+      }
+      else {
+        letterStatus = 'matched'
+      }
+
       return (
         <Letter
           key={idx}
           letter={letter}
-          selected
+          status={letterStatus}
         />
       )
-    })
+    }, this)
 
-    var unmatchedLetters = this.props.unmatchedLetters.map(function map (letter, idx) {
+    unmatchedLetters = unmatchedLetters.map(function map (letter, idx) {
       var offset = matchedLetters.length
 
       return (
