@@ -1,38 +1,24 @@
 var React = require('react')
+var classnames = require('classnames')
 
 module.exports = React.createClass({
   propTypes: {
     letter: React.PropTypes.string
-  , status: React.PropTypes.oneOf(['matched', 'correct', 'wrong'])
+  , status: React.PropTypes.oneOf(['unmatched', 'matched', 'correct', 'wrong'])
+  }
+
+, getDefaultProps: function getDefaultProps () {
+    return {
+      status: 'unmatched'
+    }
   }
 
 , render: function render () {
-    var style = {
-      backgroundColor: ''
-    }
-    var backgroundColor
-
-    switch (this.props.status) {
-      case 'matched':
-        backgroundColor = 'yellow'
-        break
-      case 'correct':
-        backgroundColor = 'green'
-        break
-      case 'wrong':
-        backgroundColor = 'red'
-        break
-      default:
-        backgroundColor = 'white'
-        break
-    }
-
-    style.backgroundColor = backgroundColor
+    var status = `letter-${this.props.status}`
+    var classes = classnames('letter', status)
 
     return (
-      <div style={style}>
-        <h1>{this.props.letter}</h1>
-      </div>
+      <span className={classes}>{this.props.letter}</span>
     )
   }
 })
