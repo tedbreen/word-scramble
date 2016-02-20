@@ -108,7 +108,7 @@ module.exports = React.createClass({
           progress={roundStatus}
         />
         <footer className="app-footer">
-          Made with React by <a className="app-footer-link" href="https://twitter.com/tedbreen">@tedbreen</a>
+          {'Made with React by '}<a className="app-footer-link" href="https://github.com/tedbreen/word-scramble" target="_blank">{'@tedbreen'}</a>
         </footer>
       </div>
     )
