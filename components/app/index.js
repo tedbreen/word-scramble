@@ -4,6 +4,7 @@ var shuffleArray = require('shuffle-array')
 var reqwest = require('reqwest')
 // components
 var Word = require('../word/')
+var Footer = require('../footer/')
 // constants
 var ROUND_DELAY = 1500
 
@@ -107,9 +108,10 @@ module.exports = React.createClass({
           unmatchedLetters={unmatchedLetters}
           progress={roundStatus}
         />
-        <footer className="app-footer">
-          {'Made with React by '}<a className="app-footer-link" href="https://github.com/tedbreen/word-scramble" target="_blank">{'@tedbreen'}</a>
-        </footer>
+        <Footer
+          linkName="@tedbreen"
+          url="https://github.com/tedbreen/word-scramble"
+        />
       </div>
     )
   }

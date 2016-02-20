@@ -5,15 +5,3 @@
   align-items: center;
   height: 90vh;
 }
-
-.app-footer {
-  flex: 0 1 auto;
-  font-size: 20px;
-  font-weight: 600;
-  color: #dbbb09;
-}
-
-.app-footer-link {
-  color: #b1970a;
-  text-decoration: none;
-}
