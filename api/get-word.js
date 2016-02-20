@@ -3,6 +3,7 @@ var querystring = require('querystring')
 
 var MIN_WORD_LENGTH = 4
 var MAX_WORD_LENGTH = 7
+var MIN_CORPUS_COUNT = 1000000
 
 var apiKey = process.env.WORDNIK_KEY
 
@@ -10,6 +11,7 @@ module.exports = function getWord (request, response) {
   var queryStr = querystring.stringify({
     minLength: MIN_WORD_LENGTH
   , maxLength: MAX_WORD_LENGTH
+  , minCorpusCount: MIN_CORPUS_COUNT
   , api_key: apiKey
   })
 
