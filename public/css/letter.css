@@ -1,0 +1,42 @@
+.letter {
+  -webkit-user-select: none;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 60px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.letter-unmatched {
+  color: #dbbb09;
+  background-color: #fee970;
+}
+
+.letter-matched {
+  color: #f2d31d;
+  background: #fff;
+}
+
+.letter-correct {
+  color: #fff;
+  background: green;
+}
+
+.letter-wrong {
+  color: #fff;
+  background: red;
+}
+
+@media (max-width: 660px) {
+  .letter {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 45px;
+  }
+}

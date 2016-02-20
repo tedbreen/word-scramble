@@ -1,0 +1,9 @@
+@import './css/app.css';
+@import './css/word.css';
+@import './css/letter.css';
+@import './css/footer.css';
+
+body {
+  background: #f2d31d;
+  font-family: Open Sans, sans-serif;
+}
